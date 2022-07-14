@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl && \
     chmod +x /usr/local/bin/*
 
 # wix
-RUN apt-get update && apt-get install -y --no-install-recommends curl bsdtar && \
+RUN apt-get update && apt-get install -y --no-install-recommends curl libarchive-tools && \
     mkdir -p /opt/wix/bin && \
     curl -kSL https://github.com/wixtoolset/wix3/releases/download/wix3112rtm/wix311-binaries.zip | \
     bsdtar -C /opt/wix/bin -xf - && sh /tmp/exelink.sh /opt/wix/bin && rm -f /tmp/exelink.sh && \

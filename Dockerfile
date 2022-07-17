@@ -1,4 +1,4 @@
-FROM i386/debian:stable-slim
+FROM amd64/debian:stable-slim
 
 LABEL maintainer="admin@umod.org"
 

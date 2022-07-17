@@ -1,6 +1,6 @@
 FROM i386/debian:stable-slim
 
-LABEL maintainer="docker-wix@fritz-elfert.de"
+LABEL maintainer="admin@umod.org"
 
 # misc prerequisites
 RUN apt-get update && apt-get install -y --no-install-recommends wine && \
@@ -26,8 +26,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl wget libar
     rm -rf /var/lib/apt/lists/* /usr/share/doc/* /usr/share/X11/locale
     
 # dotnet
-RUN wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
-    dpkg -i packages-microsoft-prod.deb && \
+RUN wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
+    sudo dpkg -i packages-microsoft-prod.deb && \
     rm packages-microsoft-prod.deb && \
     apt-get update && \
     apt-get install -y apt-transport-https && \

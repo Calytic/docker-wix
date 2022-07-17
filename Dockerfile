@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl && \
     chmod +x /usr/local/bin/*
 
 # wix
-RUN apt-get update && apt-get install -y --no-install-recommends curl wget ca-certificates libarchive-tools && \
+RUN apt-get update && apt-get install -y --no-install-recommends curl wget ca-certificates gpg apt-transport-https libarchive-tools && \
     mkdir -p /opt/wix/bin && \
     curl -kSL https://github.com/wixtoolset/wix3/releases/download/wix3112rtm/wix311-binaries.zip | \
     bsdtar -C /opt/wix/bin -xf - && sh /tmp/exelink.sh /opt/wix/bin && rm -f /tmp/exelink.sh && \
@@ -26,11 +26,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl wget ca-ce
     rm -rf /var/lib/apt/lists/* /usr/share/doc/* /usr/share/X11/locale
     
 # dotnet
-RUN wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
-    dpkg -i packages-microsoft-prod.deb && \
-    rm packages-microsoft-prod.deb && \
-    apt-get update && \
-    apt-get install -y apt-transport-https && \
+RUN wget -O - https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o microsoft.asc.gpg && \
+    mv microsoft.asc.gpg /etc/apt/trusted.gpg.d/ && \
+    wget https://packages.microsoft.com/config/debian/11/prod.list && \
+    mv prod.list /etc/apt/sources.list.d/microsoft-prod.list && \
     apt-get update && \
     apt-get install -y dotnet-sdk-6.0
 

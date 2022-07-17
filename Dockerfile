@@ -4,7 +4,7 @@ LABEL maintainer="admin@umod.org"
 
 # misc prerequisites
 RUN dpkg --add-architecture i386 && \
-    apt-get update && apt-get install -y --no-install-recommends wine && \
+    apt-get update && apt-get install -y --no-install-recommends wine wine32 wine64 libwine libwine:i386 fonts-wine && \
     apt-get purge -y --auto-remove --purge tzdata && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy resources

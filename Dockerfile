@@ -3,7 +3,8 @@ FROM amd64/debian:stable-slim
 LABEL maintainer="admin@umod.org"
 
 # misc prerequisites
-RUN apt-get update && apt-get install -y --no-install-recommends wine && \
+RUN dpkg --add-architecture i386 && \
+    apt-get update && apt-get install -y --no-install-recommends wine32 && \
     apt-get purge -y --auto-remove --purge tzdata && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy resources
@@ -39,6 +40,7 @@ VOLUME /work
 
 # prep wine and install .NET Framework 4.0
 ENV WINEDEBUG=-all WD=/
+ENV WINEARCH=win32 wineboot
 RUN apt-get update && apt-get install -y --no-install-recommends procps && \
     su -c "wine wineboot --init && waiton wineserver && winetricks --unattended --force dotnet40 && waiton wineserver" wix && \
     apt-get purge -y --auto-remove --purge wget ca-certificates gpg apt-transport-https procps && apt-get clean && \

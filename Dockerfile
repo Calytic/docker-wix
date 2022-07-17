@@ -22,12 +22,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl wget libar
     mkdir -p /opt/wix/bin && \
     curl -kSL https://github.com/wixtoolset/wix3/releases/download/wix3112rtm/wix311-binaries.zip | \
     bsdtar -C /opt/wix/bin -xf - && sh /tmp/exelink.sh /opt/wix/bin && rm -f /tmp/exelink.sh && \
-    apt-get purge -y --auto-remove --purge bsdtar && apt-get clean && \
+    apt-get purge -y --auto-remove --purge libarchive-tools && apt-get clean && \
     rm -rf /var/lib/apt/lists/* /usr/share/doc/* /usr/share/X11/locale
     
 # dotnet
-RUN wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
-    sudo dpkg -i packages-microsoft-prod.deb && \
+RUN wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
+    dpkg -i packages-microsoft-prod.deb && \
     rm packages-microsoft-prod.deb && \
     apt-get update && \
     apt-get install -y apt-transport-https && \

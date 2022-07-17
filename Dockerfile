@@ -1,4 +1,4 @@
-FROM i386/debian:stable-slim
+FROM amd64/debian:stable-slim
 
 LABEL maintainer="admin@umod.org"
 
@@ -39,10 +39,9 @@ VOLUME /work
 
 # prep wine and install .NET Framework 4.0
 ENV WINEDEBUG=-all WD=/
-RUN apt-get update && apt-get install -y --no-install-recommends curl procps && \
-    echo insecure > /home/wix/.curlrc && \
+RUN apt-get update && apt-get install -y --no-install-recommends procps && \
     su -c "wine wineboot --init && waiton wineserver && winetricks --unattended --force dotnet40 && waiton wineserver" wix && \
-    apt-get purge -y --auto-remove --purge procps && apt-get clean && \
+    apt-get purge -y --auto-remove --purge wget ca-certificates gpg apt-transport-https procps && apt-get clean && \
     rm -rf /var/lib/apt/lists/* /usr/share/doc/* /usr/share/X11/locale \
     /home/wix/.wine/drive_c/users/wix/Temp/* /usr/local/bin/waiton /usr/local/bin/winetricks
 

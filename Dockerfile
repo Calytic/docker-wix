@@ -24,6 +24,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl libarchive
     bsdtar -C /opt/wix/bin -xf - && sh /tmp/exelink.sh /opt/wix/bin && rm -f /tmp/exelink.sh && \
     apt-get purge -y --auto-remove --purge bsdtar && apt-get clean && \
     rm -rf /var/lib/apt/lists/* /usr/share/doc/* /usr/share/X11/locale
+    
+# dotnet
+RUN wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
+    dpkg -i packages-microsoft-prod.deb && \
+    rm packages-microsoft-prod.deb && \
+    apt-get update && \
+    apt-get install -y apt-transport-https && \
+    apt-get update && \
+    apt-get install -y dotnet-sdk-6.0
 
 # create user and mount point
 RUN useradd -m -s /bin/bash wix && mkdir /work && chown wix:wix -R /work
